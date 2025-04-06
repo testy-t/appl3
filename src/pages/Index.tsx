@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 
 const Index = () => {
   // Фиксированное "случайное" число
-  const randomNumber = 429;
+  const randomNumber = 853;
 
   return (
     <Layout>
