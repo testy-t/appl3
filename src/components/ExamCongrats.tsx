@@ -73,10 +73,10 @@ const ExamCongrats = () => {
     
     // Случайный фоновый цвет
     const hue = Math.floor(Math.random() * 360);
-    const bgColor = `hsla(${hue}, 80%, 60%, 0.3)`;
+    const bgColor = `hsla(${hue}, 80%, 60%, 0.4)`;
     
-    // Случайный размер шрифта
-    const fontSize = Math.floor(Math.random() * 8) + 16; // 16px - 24px
+    // Случайный размер шрифта (увеличенный)
+    const fontSize = Math.floor(Math.random() * 12) + 22; // 22px - 34px
     
     floatingText.className = 'floating-text';
     floatingText.style.left = `${startX}%`;
@@ -99,10 +99,9 @@ const ExamCongrats = () => {
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 flex items-center justify-center p-4 relative overflow-hidden">
       <div id="confetti-container" className="fixed inset-0 pointer-events-none" />
-      <div id="floating-text-container" className="fixed inset-0 pointer-events-none overflow-hidden" />
       
       <div 
-        className={`relative max-w-3xl w-full mx-auto bg-black/30 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden transition-all duration-1000 ${
+        className={`relative max-w-4xl w-full mx-auto bg-black/30 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden transition-all duration-1000 ${
           animate ? 'scale-100 opacity-100' : 'scale-90 opacity-0'
         }`}
       >
@@ -111,19 +110,20 @@ const ExamCongrats = () => {
         
         <div className="relative z-10 p-6 md:p-8">
           {/* Заголовок */}
-          <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-white drop-shadow-lg animate-pulse">
+          <h1 className="text-3xl md:text-5xl font-bold text-center mb-6 text-white drop-shadow-lg animate-pulse">
             Машуха, удачи на экзаменах!
           </h1>
           
-          {/* Изображение */}
-          <div className="relative mx-auto w-full max-w-md h-64 md:h-80 mb-6 rounded-lg overflow-hidden shadow-xl">
+          {/* Изображение (увеличенное и с фильтрами) */}
+          <div className="relative mx-auto w-full max-w-2xl h-80 md:h-96 mb-6 rounded-lg overflow-hidden shadow-xl">
             <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 animate-shimmer rounded-lg"></div>
             <img 
               src="https://cdn.poehali.dev/files/b7b9a11b-1064-4f1f-87c3-eae2818cf36b.jpg" 
               alt="Машуха в Москве" 
-              className="absolute inset-0 w-full h-full object-cover object-center rounded-lg"
+              className="absolute inset-0 w-full h-full object-cover object-center rounded-lg brightness-110 contrast-110 filter"
+              style={{ filter: 'brightness(1.2) contrast(1.1)' }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
           
           {/* Текст пожелания */}
@@ -134,6 +134,9 @@ const ExamCongrats = () => {
           </div>
         </div>
       </div>
+      
+      {/* Плавающие тексты поверх всего */}
+      <div id="floating-text-container" className="fixed inset-0 pointer-events-none overflow-hidden z-50" />
     </div>
   );
 };
