@@ -144,6 +144,25 @@
   }
 }
 
+@keyframes floatText {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(var(--tx-start), var(--ty-start)) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(var(--tx-end), var(--ty-end)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx-end), var(--ty-end)) scale(0.8);
+  }
+}
+
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradient 3s ease infinite;
@@ -152,4 +171,19 @@
 .animate-shimmer {
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
+}
+
+.floating-text {
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  animation: floatText 7s ease-in-out forwards;
+  z-index: 50;
 }

@@ -12,7 +12,15 @@ const ExamCongrats = () => {
       createConfetti();
     }, 300);
     
-    return () => clearInterval(confettiInterval);
+    // Создаем эффект плавающих надписей
+    const floatingTextInterval = setInterval(() => {
+      createFloatingText();
+    }, 1500);
+    
+    return () => {
+      clearInterval(confettiInterval);
+      clearInterval(floatingTextInterval);
+    };
   }, []);
   
   const createConfetti = () => {
@@ -36,9 +44,62 @@ const ExamCongrats = () => {
     }, 5000);
   };
   
+  const createFloatingText = () => {
+    const container = document.getElementById('floating-text-container');
+    if (!container) return;
+    
+    const texts = [
+      'Москва уже ждет тебя! 🏙️✨', 
+      'Гимназия скоро распахнет свои двери!', 
+      'Ты справишься! 💪',
+      'Поступление будет легким! 🚀',
+      'Все экзамены на отлично! 🎯',
+      'Удачи тебе! 🍀'
+    ];
+    
+    const floatingText = document.createElement('div');
+    
+    // Случайный выбор текста
+    const textContent = texts[Math.floor(Math.random() * texts.length)];
+    floatingText.textContent = textContent;
+    
+    // Случайное начальное положение
+    const startX = Math.random() * 80; // %
+    const startY = Math.random() * 80; // %
+    
+    // Случайное конечное положение
+    const endX = startX + (Math.random() * 60 - 30); // сдвиг на -30...+30%
+    const endY = startY + (Math.random() * 60 - 30); // сдвиг на -30...+30%
+    
+    // Случайный фоновый цвет
+    const hue = Math.floor(Math.random() * 360);
+    const bgColor = `hsla(${hue}, 80%, 60%, 0.3)`;
+    
+    // Случайный размер шрифта
+    const fontSize = Math.floor(Math.random() * 8) + 16; // 16px - 24px
+    
+    floatingText.className = 'floating-text';
+    floatingText.style.left = `${startX}%`;
+    floatingText.style.top = `${startY}%`;
+    floatingText.style.setProperty('--tx-start', `${0}px`);
+    floatingText.style.setProperty('--ty-start', `${0}px`);
+    floatingText.style.setProperty('--tx-end', `${endX - startX}vw`);
+    floatingText.style.setProperty('--ty-end', `${endY - startY}vh`);
+    floatingText.style.backgroundColor = bgColor;
+    floatingText.style.fontSize = `${fontSize}px`;
+    
+    container.appendChild(floatingText);
+    
+    // Удаляем надпись после анимации
+    setTimeout(() => {
+      floatingText.remove();
+    }, 7000);
+  };
+  
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 flex items-center justify-center p-4 relative overflow-hidden">
       <div id="confetti-container" className="fixed inset-0 pointer-events-none" />
+      <div id="floating-text-container" className="fixed inset-0 pointer-events-none overflow-hidden" />
       
       <div 
         className={`relative max-w-3xl w-full mx-auto bg-black/30 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden transition-all duration-1000 ${
@@ -70,14 +131,6 @@ const ExamCongrats = () => {
             <p className="text-xl md:text-2xl text-white font-medium text-center leading-relaxed drop-shadow-md">
               Пусть все экзамены сдаются <span className="font-bold text-yellow-300 animate-bounce inline-block">с кайфом</span> и на высшие баллы!
             </p>
-            <p className="mt-4 text-lg text-white text-center drop-shadow-md">
-              Москва уже ждет тебя! 🏙️✨ Гимназия скоро распахнет свои двери!
-            </p>
-            <div className="mt-6 flex justify-center">
-              <button className="px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200">
-                Ты справишься! 💪
-              </button>
-            </div>
           </div>
         </div>
       </div>
