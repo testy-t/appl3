@@ -1,3 +1,3 @@
-# mashuha
+# testy-b
 
-Initial repository setup for pr-poehali-dev/mashuha
+Initial repository setup for pr-poehali-dev/testy-b
