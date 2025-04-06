@@ -37,16 +37,16 @@ const ExamCongrats = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 flex items-center justify-center p-4 relative overflow-hidden">
-      <div id="confetti-container" className="absolute inset-0 pointer-events-none" />
+    <div className="min-h-screen w-full bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 flex items-center justify-center p-4 relative overflow-hidden">
+      <div id="confetti-container" className="fixed inset-0 pointer-events-none" />
       
       <div 
-        className={`relative max-w-3xl w-full mx-auto bg-white bg-opacity-20 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden transition-all duration-1000 ${
+        className={`relative max-w-3xl w-full mx-auto bg-black/30 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden transition-all duration-1000 ${
           animate ? 'scale-100 opacity-100' : 'scale-90 opacity-0'
         }`}
       >
         {/* Фон с переливающимся эффектом */}
-        <div className="absolute inset-0 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 opacity-30 animate-gradient"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-pink-500/50 via-purple-500/50 to-indigo-500/50 opacity-70 animate-gradient"></div>
         
         <div className="relative z-10 p-6 md:p-8">
           {/* Заголовок */}
@@ -55,7 +55,7 @@ const ExamCongrats = () => {
           </h1>
           
           {/* Изображение */}
-          <div className="relative mx-auto w-full max-w-md h-64 md:h-80 mb-6 rounded-lg overflow-hidden">
+          <div className="relative mx-auto w-full max-w-md h-64 md:h-80 mb-6 rounded-lg overflow-hidden shadow-xl">
             <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 animate-shimmer rounded-lg"></div>
             <img 
               src="https://cdn.poehali.dev/files/b7b9a11b-1064-4f1f-87c3-eae2818cf36b.jpg" 
@@ -66,15 +66,15 @@ const ExamCongrats = () => {
           </div>
           
           {/* Текст пожелания */}
-          <div className="bg-white bg-opacity-25 backdrop-blur-sm p-5 rounded-lg shadow-lg border border-white border-opacity-40">
-            <p className="text-xl md:text-2xl text-white font-medium text-center leading-relaxed">
+          <div className="bg-black/40 p-5 rounded-lg shadow-lg border border-white/20">
+            <p className="text-xl md:text-2xl text-white font-medium text-center leading-relaxed drop-shadow-md">
               Пусть все экзамены сдаются <span className="font-bold text-yellow-300 animate-bounce inline-block">с кайфом</span> и на высшие баллы!
             </p>
-            <p className="mt-4 text-lg text-white text-center">
+            <p className="mt-4 text-lg text-white text-center drop-shadow-md">
               Москва уже ждет тебя! 🏙️✨ Гимназия скоро распахнет свои двери!
             </p>
             <div className="mt-6 flex justify-center">
-              <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200">
+              <button className="px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200">
                 Ты справишься! 💪
               </button>
             </div>
