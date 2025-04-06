@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
@@ -11,6 +12,7 @@ interface GiftCard {
 }
 
 const GiftCardList = () => {
+  const navigate = useNavigate();
   const giftCards: GiftCard[] = [
     { id: 1, value: 1000, discount: 5, imageSrc: "/placeholder.svg" },
     { id: 2, value: 2500, discount: 7, imageSrc: "/placeholder.svg" },
@@ -22,7 +24,9 @@ const GiftCardList = () => {
 
   const handlePurchase = () => {
     if (selectedCard !== null) {
-      alert(`Заказ карты на ${giftCards[selectedCard].value} ₽ оформлен`);
+      // Сохраняем выбранную карту в localStorage для использования на странице оформления заказа
+      localStorage.setItem("selectedCard", JSON.stringify(giftCards[selectedCard]));
+      navigate("/checkout");
     }
   };
 
