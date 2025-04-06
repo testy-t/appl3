@@ -1,9 +1,138 @@
 /**
- * Error handler for test_coder app
- * This script captures runtime errors and displays a custom error screen
+ * Error handler and badge for test_coder app
+ * This script:
+ * 1. Captures runtime errors and displays a custom error screen (only in iframe)
+ * 2. Shows a Poehali! badge in the bottom right corner (only in production iframe)
  */
 
 (function () {
+    // Check if we're in an iframe
+    const isInIframe = window.self !== window.top;
+    
+    // Function to determine if we're in production environment
+    // Using Vite's built-in environment variables
+    const isProduction = () => {
+        // In normal script tags, we need a different approach since import.meta is not available
+        // We can check if certain dev-only features exist
+        if (typeof window.__VUE_HMR_RUNTIME__ !== 'undefined' ||
+            typeof window.HMR_RUNTIME !== 'undefined' ||
+            typeof window.__vite_plugin_react_preamble_installed__ !== 'undefined') {
+            return false; // Dev environment with hot module replacement
+        }
+
+        // Another way is to check for the absence of dev tools
+        if (window.location.port === '5173' || // Default Vite dev port
+            window.location.port === '3000' ||  // Common dev port
+            window.location.port === '8080') {  // Another common dev port
+            return false;
+        }
+
+        return true; // Default to production if no dev indicators found
+    };
+
+    // Storage for badge visibility state
+    let badgeHidden = false;
+
+    // Try to load badge state from localStorage
+    try {
+        badgeHidden = localStorage.getItem('poehali-badge-hidden') === 'true';
+    } catch (e) {
+        // Ignore localStorage errors
+    }
+
+    // Create the Poehali! badge (only in production and if not hidden)
+    function createPoehaliiBadge() {
+        // Skip if not in production or badge is hidden
+        if (!isProduction() || badgeHidden) {
+            return null;
+        }
+
+        const badge = document.createElement('div');
+        badge.id = 'poehali-badge';
+        badge.style.position = 'fixed';
+        badge.style.bottom = '20px';
+        badge.style.right = '20px';
+        badge.style.backgroundColor = '#171717';
+        badge.style.border = '2px solid #FBB040';
+        badge.style.color = 'white';
+        badge.style.padding = '8px 12px';
+        badge.style.borderRadius = '0.85rem';
+        badge.style.fontSize = '14px';
+        badge.style.fontWeight = 'bold';
+        badge.style.fontFamily = 'Arial, sans-serif';
+        badge.style.display = 'flex';
+        badge.style.alignItems = 'center';
+        badge.style.gap = '8px';
+        badge.style.zIndex = '999999';
+        badge.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+        badge.style.transition = 'all 0.3s ease';
+        badge.style.cursor = 'pointer';
+
+        // Add logo
+        const logo = document.createElement('img');
+        logo.src = 'https://cdn.poehali.dev/intertnal/brand/logo.svg';
+        logo.style.height = '20px';
+        logo.style.width = 'auto';
+        logo.alt = 'Poehali logo';
+        logo.style.display = 'block';
+
+        // Add text
+        const text = document.createElement('span');
+        text.textContent = 'Поехали!';
+
+        badge.appendChild(logo);
+        badge.appendChild(text);
+
+        // Append to document
+        document.body.appendChild(badge);
+
+        // Add hover effect
+        badge.onmouseover = function() {
+            this.style.transform = 'translateY(-3px)';
+            this.style.boxShadow = '0 4px 15px rgba(251, 176, 64, 0.3)';
+        };
+        
+        badge.onmouseout = function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+        };
+
+        return badge;
+    }
+
+    // Create the badge when DOM is loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createPoehaliiBadge);
+    } else {
+        createPoehaliiBadge();
+    }
+
+    // Function to hide the badge - can be called via API
+    window.hidePoehaliiBadge = function(permanently = false) {
+        const badge = document.getElementById('poehali-badge');
+        if (badge) {
+            badge.style.display = 'none';
+        }
+        
+        badgeHidden = true;
+        
+        // Optionally store this preference
+        if (permanently) {
+            try {
+                localStorage.setItem('poehali-badge-hidden', 'true');
+            } catch (e) {
+                // Ignore localStorage errors
+            }
+        }
+    };
+    
+    // If we're not in an iframe, don't set up the error handler
+    // But still keep the badge
+    if (!isInIframe) {
+        console.log("Error handler not initialized: page is not in an iframe");
+        return;
+    }
+    
     // Save original console methods
     const originalConsoleError = console.error;
     const originalConsoleWarn = console.warn;
