@@ -1,14 +1,9 @@
 
 import Layout from "@/components/Layout";
-import { useState, useEffect } from "react";
 
 const Index = () => {
-  const [randomNumber, setRandomNumber] = useState<number>(0);
-
-  useEffect(() => {
-    // Генерируем случайное число от 1 до 1000 при загрузке страницы
-    setRandomNumber(Math.floor(Math.random() * 1000) + 1);
-  }, []);
+  // Фиксированное "случайное" число
+  const randomNumber = 427;
 
   return (
     <Layout>
