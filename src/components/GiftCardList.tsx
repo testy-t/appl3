@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import ErrorDialog from "@/components/ErrorDialog";
 
 interface GiftCard {
   id: number;
@@ -21,6 +22,11 @@ const GiftCardList = () => {
   ];
 
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [error, setError] = useState<{show: boolean; code: string; message: string}>({
+    show: false,
+    code: "",
+    message: ""
+  });
 
   const handlePurchase = () => {
     if (selectedCard !== null) {
@@ -31,11 +37,29 @@ const GiftCardList = () => {
   };
 
   const handleSelectCard = (index: number) => {
-    // Вызываем тестовую JavaScript ошибку при нажатии на кнопку
-    throw new Error("Тестовая ошибка при выборе карты");
-    
-    // Этот код никогда не выполнится из-за ошибки выше
-    setSelectedCard(index);
+    try {
+      // Вызываем тестовую JavaScript ошибку при нажатии на кнопку
+      throw new Error("Тестовая ошибка при выборе карты");
+      
+      // Этот код никогда не выполнится из-за ошибки выше
+      // setSelectedCard(index);
+    } catch (err) {
+      // Перехватываем ошибку и показываем диалог вместо краша страницы
+      const error = err as Error;
+      setError({
+        show: true,
+        code: "SELECT_CARD_ERROR",
+        message: error.message
+      });
+    }
+  };
+
+  const handleErrorClose = () => {
+    setError({
+      show: false,
+      code: "",
+      message: ""
+    });
   };
 
   return (
@@ -106,6 +130,14 @@ const GiftCardList = () => {
           </div>
         )}
       </div>
+
+      {/* Диалог с ошибкой */}
+      <ErrorDialog 
+        open={error.show}
+        onClose={handleErrorClose}
+        errorCode={error.code}
+        errorMessage={error.message}
+      />
     </section>
   );
 };
