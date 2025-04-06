@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
-import ErrorDialog from "@/components/ErrorDialog";
 
 interface GiftCard {
   id: number;
@@ -22,7 +21,6 @@ const GiftCardList = () => {
   ];
 
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
 
   const handlePurchase = () => {
     if (selectedCard !== null) {
@@ -33,14 +31,11 @@ const GiftCardList = () => {
   };
 
   const handleSelectCard = (index: number) => {
-    // Вместо установки выбранной карты показываем тестовую ошибку
-    setErrorDialogOpen(true);
-  };
-
-  const closeErrorDialog = () => {
-    setErrorDialogOpen(false);
-    // После закрытия ошибки можно установить выбранную карту
-    setSelectedCard(selectedCard);
+    // Вызываем тестовую JavaScript ошибку при нажатии на кнопку
+    throw new Error("Тестовая ошибка при выборе карты");
+    
+    // Этот код никогда не выполнится из-за ошибки выше
+    setSelectedCard(index);
   };
 
   return (
@@ -111,13 +106,6 @@ const GiftCardList = () => {
           </div>
         )}
       </div>
-
-      <ErrorDialog 
-        open={errorDialogOpen}
-        onClose={closeErrorDialog}
-        errorCode="ERR_CARD_SELECT_FAILED"
-        errorMessage="Не удалось выбрать карту из-за временных технических проблем. Пожалуйста, попробуйте снова или выберите другой номинал."
-      />
     </section>
   );
 };
