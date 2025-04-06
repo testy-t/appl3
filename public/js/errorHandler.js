@@ -52,14 +52,14 @@
         badge.style.position = 'fixed';
         badge.style.bottom = '20px';
         badge.style.right = '20px';
-        badge.style.backgroundColor = '#171717';
-        badge.style.border = '2px solid #FBB040';
-        badge.style.color = 'white';
-        badge.style.padding = '8px 12px';
+        badge.style.backgroundColor = '#FBB040';
+        badge.style.border = 'none';
+        badge.style.color = 'black';
+        badge.style.padding = '10px 14px';
         badge.style.borderRadius = '0.85rem';
-        badge.style.fontSize = '14px';
+        badge.style.fontSize = '16px';
         badge.style.fontWeight = 'bold';
-        badge.style.fontFamily = 'Arial, sans-serif';
+        badge.style.fontFamily = 'monospace';
         badge.style.display = 'flex';
         badge.style.alignItems = 'center';
         badge.style.gap = '8px';
@@ -68,17 +68,22 @@
         badge.style.transition = 'all 0.3s ease';
         badge.style.cursor = 'pointer';
 
+        // Make the badge clickable
+        badge.onclick = function() {
+            window.open('https://poehali.dev?utm_source=ref&utm_medium=badge', '_blank');
+        };
+
         // Add logo
         const logo = document.createElement('img');
-        logo.src = 'https://cdn.poehali.dev/intertnal/brand/logo.svg';
-        logo.style.height = '20px';
+        logo.src = 'https://cdn.poehali.dev/intertnal/brand/logo-b.svg';
+        logo.style.height = '22px';
         logo.style.width = 'auto';
         logo.alt = 'Poehali logo';
         logo.style.display = 'block';
 
         // Add text
         const text = document.createElement('span');
-        text.textContent = 'Поехали!';
+        text.textContent = 'Poehali.dev';
 
         badge.appendChild(logo);
         badge.appendChild(text);
@@ -89,7 +94,7 @@
         // Add hover effect
         badge.onmouseover = function() {
             this.style.transform = 'translateY(-3px)';
-            this.style.boxShadow = '0 4px 15px rgba(251, 176, 64, 0.3)';
+            this.style.boxShadow = '0 6px 15px rgba(251, 176, 64, 0.6)';
         };
         
         badge.onmouseout = function() {

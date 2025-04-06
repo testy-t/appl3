@@ -31,7 +31,10 @@ const GiftCardList = () => {
   };
 
   const handleSelectCard = (index: number) => {
-    // Исправлено: убрана строка, вызывающая ошибку
+    // Вызываем тестовую JavaScript ошибку при нажатии на кнопку
+    throw new Error("Тестовая ошибка при выборе карты");
+    
+    // Этот код никогда не выполнится из-за ошибки выше
     setSelectedCard(index);
   };
 
