@@ -12,10 +12,10 @@ const ExamCongrats = () => {
       createConfetti();
     }, 300);
     
-    // Создаем эффект плавающих надписей
+    // Создаем эффект плавающих надписей (реже - каждые 3 секунды)
     const floatingTextInterval = setInterval(() => {
       createFloatingText();
-    }, 1500);
+    }, 3000);
     
     return () => {
       clearInterval(confettiInterval);
@@ -54,7 +54,16 @@ const ExamCongrats = () => {
       'Ты справишься! 💪',
       'Поступление будет легким! 🚀',
       'Все экзамены на отлично! 🎯',
-      'Удачи тебе! 🍀'
+      'Удачи тебе! 🍀',
+      'Верим в твой успех! 🌟',
+      'Твои знания — твоя сила! 📚',
+      'Экзамены — это лишь ступенька к мечте! 🪜',
+      'Главное — спокойствие и уверенность! 🧘‍♀️',
+      'Мы в тебя верим! ❤️',
+      'Москва ждёт новую звезду! ⭐',
+      'Собранность и знания победят! 🏆',
+      'Гимназия — твоё будущее! 🏫',
+      'Каждый экзамен — шаг к цели! 👣'
     ];
     
     const floatingText = document.createElement('div');
@@ -63,20 +72,49 @@ const ExamCongrats = () => {
     const textContent = texts[Math.floor(Math.random() * texts.length)];
     floatingText.textContent = textContent;
     
-    // Случайное начальное положение
-    const startX = Math.random() * 80; // %
-    const startY = Math.random() * 80; // %
+    // Ограничиваем позицию появления, чтобы не залезать на центральную часть с фотографией
+    // Создаем 4 зоны: верхняя, нижняя, левая и правая области экрана
+    let startX, startY;
     
-    // Случайное конечное положение
-    const endX = startX + (Math.random() * 60 - 30); // сдвиг на -30...+30%
-    const endY = startY + (Math.random() * 60 - 30); // сдвиг на -30...+30%
+    const zone = Math.floor(Math.random() * 4); // 0-3: верх, право, низ, лево
+    
+    if (zone === 0) { // верхняя зона
+      startX = Math.random() * 90;
+      startY = Math.random() * 20;
+    } else if (zone === 1) { // правая зона
+      startX = 70 + Math.random() * 25;
+      startY = 20 + Math.random() * 60;
+    } else if (zone === 2) { // нижняя зона
+      startX = Math.random() * 90;
+      startY = 80 + Math.random() * 15;
+    } else { // левая зона
+      startX = Math.random() * 25;
+      startY = 20 + Math.random() * 60;
+    }
+    
+    // Случайное конечное положение (ограниченное в той же зоне)
+    let endX, endY;
+    
+    if (zone === 0) {
+      endX = startX + (Math.random() * 30 - 15);
+      endY = startY + Math.random() * 10;
+    } else if (zone === 1) {
+      endX = startX - Math.random() * 10;
+      endY = startY + (Math.random() * 30 - 15);
+    } else if (zone === 2) {
+      endX = startX + (Math.random() * 30 - 15);
+      endY = startY - Math.random() * 10;
+    } else {
+      endX = startX + Math.random() * 10;
+      endY = startY + (Math.random() * 30 - 15);
+    }
     
     // Случайный фоновый цвет
     const hue = Math.floor(Math.random() * 360);
     const bgColor = `hsla(${hue}, 80%, 60%, 0.4)`;
     
     // Случайный размер шрифта (увеличенный)
-    const fontSize = Math.floor(Math.random() * 12) + 22; // 22px - 34px
+    const fontSize = Math.floor(Math.random() * 10) + 22; // 22px - 32px
     
     floatingText.className = 'floating-text';
     floatingText.style.left = `${startX}%`;
@@ -120,8 +158,8 @@ const ExamCongrats = () => {
             <img 
               src="https://cdn.poehali.dev/files/b7b9a11b-1064-4f1f-87c3-eae2818cf36b.jpg" 
               alt="Машуха в Москве" 
-              className="absolute inset-0 w-full h-full object-cover object-center rounded-lg brightness-110 contrast-110 filter"
-              style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+              className="absolute inset-0 w-full h-full object-cover object-center rounded-lg"
+              style={{ filter: 'brightness(1.3) contrast(1.1)' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
