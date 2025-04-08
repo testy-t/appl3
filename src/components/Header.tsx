@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Apple } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
@@ -9,9 +9,10 @@ const Header = () => {
     <header className="bg-black bg-opacity-90 backdrop-blur-md text-white py-3 px-6 sticky top-0 z-50">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <Apple className="h-5 w-5" />
             <a href="/" className="text-xl font-medium">
-              Apple Gift Cards
+              Gift Cards
             </a>
           </div>
 
